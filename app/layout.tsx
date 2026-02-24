@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { VisitNotifier } from "@/src/components/VisitNotifier";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className="font-sans antialiased min-h-screen">
         {children}
         <Analytics />
+        <VisitNotifier />
       </body>
     </html>
   );
