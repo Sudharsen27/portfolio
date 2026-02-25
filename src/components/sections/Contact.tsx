@@ -60,15 +60,15 @@ export function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="py-20 scroll-mt-20"
+      className="scroll-mt-20 py-12 sm:py-16 md:py-20"
     >
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionTitle
           title="Contact"
           subtitle="Reach out anytime—I'm happy to connect."
         />
         <div
-          className="rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-6 shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 md:p-8"
+          className="rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-4 shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 sm:p-6 md:p-8"
           style={
             inView
               ? {
@@ -78,19 +78,19 @@ export function Contact() {
               : { opacity: 0 }
           }
         >
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:gap-6">
             {contactItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-4 rounded-lg border border-zinc-700/50 bg-zinc-800/60 p-4 transition-all hover:border-blue-500/40 hover:bg-zinc-700/50"
+                className="group flex min-h-[44px] flex-col justify-center gap-1 rounded-lg border border-zinc-700/50 bg-zinc-800/60 p-3 transition-all hover:border-blue-500/40 hover:bg-zinc-700/50 sm:min-h-0 sm:flex-row sm:items-center sm:gap-4 sm:p-4"
               >
-                <span className="text-sm font-medium uppercase tracking-wider text-blue-400">
+                <span className="text-xs font-medium uppercase tracking-wider text-blue-400 sm:text-sm">
                   {item.label}
                 </span>
-                <span className="min-w-0 flex-1 truncate text-right text-sm font-medium text-zinc-200 group-hover:text-white">
+                <span className="min-w-0 truncate text-left text-sm font-medium text-zinc-200 group-hover:text-white sm:flex-1 sm:text-right">
                   {item.value}
                 </span>
               </a>
