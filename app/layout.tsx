@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   title: "Sundar Lingam | Software Engineer | Frontend-Focused Full Stack Developer",
   description:
     "Portfolio of Sundar Lingam — Software Developer with experience in full-stack development, React, Next.js, Node.js, and PostgreSQL. Building scalable web applications.",
+  icons: {
+    icon: "/log2.png",
+    apple: "/log2.png",
+  },
 };
 
 export default function RootLayout({
