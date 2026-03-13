@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Sundar Lingam — Software Developer with experience in full-stack development, React, Next.js, Node.js, and PostgreSQL. Building scalable web applications.",
   icons: {
-    icon: "/log2.png",
-    apple: "/log2.png",
+    icon: "/log.png",
+    apple: "/log.png",
   },
 };
 
