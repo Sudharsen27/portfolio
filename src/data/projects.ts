@@ -64,4 +64,13 @@ export const projectsData: Project[] = [
     href: "https://shopsphere-frontend-self.vercel.app/",
     repo: "#",
   },
+  {
+    id: "8",
+    title: "Student Dashboard",
+    description:
+      "Built an interactive dashboard to search, sort, add, edit, and analyze student marks with a Next.js frontend, Node.js backend API, and Snowflake as the database.",
+    tags: ["Next.js", "Node.js", "Snowflake", "Dashboard", "Data Visualization"],
+    href: "https://student-dashboard-snowflake-fronten.vercel.app/",
+    repo: "#",
+  },
 ];
