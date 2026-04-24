@@ -2,15 +2,27 @@ import type { ExperienceItem } from "@/src/types";
 
 export const experienceData: ExperienceItem[] = [
   {
+    role: "Software Developer",
+    company: "Analytix-Hub Technologies Pvt. Ltd. · Chennai, TN",
+    period: "Apr 2026 – Present",
+    highlights: [
+      "Design, develop, and maintain full-stack application features across frontend and backend systems.",
+      "Build scalable user interfaces, APIs, and backend services aligned with business and client requirements.",
+      "Develop and integrate data pipelines for analytics workflows to support reliable data-driven decisions.",
+      "Collaborate with product, design, data, and engineering stakeholders to deliver production-ready solutions on schedule.",
+      "Apply clean coding, testing, and performance optimization practices to improve reliability, maintainability, and delivery quality.",
+    ],
+  },
+  {
     role: "Software Development Engineer (SDE I)",
     company: "Wraptron Apptech LLP · Chennai, TN",
-    period: "Mar 2024 – Present",
+    period: "Mar 2024 – Mar 2026",
     highlights: [
-      "Develop and implement new software features and applications across frontend and backend.",
-      "Write clean, optimized, and testable code; debug and resolve issues for high performance and scalability.",
-      "Collaborate with management and technical teams to deliver projects on time.",
-      "Apply testing methodologies, write test cases, and maintain software quality.",
-      "Recommend process improvements to optimize workflows and system performance.",
+      "Delivered full-stack software features across frontend and backend to support new product and client needs.",
+      "Wrote clean, testable, and optimized code; diagnosed and resolved issues to improve application stability and performance.",
+      "Partnered with technical and business stakeholders to ensure on-time feature delivery and smooth release execution.",
+      "Implemented testing practices and quality checks to reduce defects and improve code reliability.",
+      "Identified and introduced process improvements to streamline development workflows and enhance team efficiency.",
     ],
   },
   {

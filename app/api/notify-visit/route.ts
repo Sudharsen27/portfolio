@@ -213,10 +213,11 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: false,
+        skipped: true,
         error: "Missing notification configuration. Set NOTIFY_WEBHOOK_URL or (NOTIFY_EMAIL_TO + RESEND_API_KEY).",
         missing,
       },
-      { status: 501 }
+      { status: 200 }
     );
   }
 
