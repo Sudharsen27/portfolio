@@ -24,6 +24,14 @@ export interface Project {
   repo?: string;
 }
 
+export interface CertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  year: string;
+  link?: string | null;
+}
+
 export interface HeroData {
   headline: string;
   subhead: string;

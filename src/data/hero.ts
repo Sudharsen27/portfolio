@@ -2,7 +2,7 @@ import type { HeroData } from "@/src/types";
 
 export const heroData: HeroData = {
   headline: "Sundar Lingam",
-  subhead: "Software Engineer | Frontend-Focused Full Stack Developer",
+  subhead: "Software Engineer | Full Stack Developer",
   tagline:
-    "Building scalable web applications with React, Next.js, and Node.js. Focused on clean code, performance, and delivering high-quality solutions.\n\nI work with product and design teams, deliver on time, and focus on impact—ready to fit in and add value from day one. I bring the technical depth and collaboration mindset you're looking for.",
+    "Software Engineer with experience building scalable and responsive web applications. Focused on writing clean, maintainable code and delivering high-quality user experiences.\n\nCollaborates effectively with cross-functional teams, meets deadlines, and contributes to impactful product development.",
 };

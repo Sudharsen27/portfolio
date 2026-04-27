@@ -7,6 +7,7 @@ import { About } from "@/src/components/sections/About";
 import { Skills } from "@/src/components/sections/Skills";
 import { Experience } from "@/src/components/sections/Experience";
 import { Projects } from "@/src/components/sections/Projects";
+import { Certifications } from "@/src/components/sections/Certifications";
 import { Contact } from "@/src/components/sections/Contact";
 
 interface HomeContentProps {
@@ -32,6 +33,7 @@ export function HomeContent({ scrollTo }: HomeContentProps) {
         <Skills />
         <Experience />
         <Projects />
+        <Certifications />
         <Contact />
       </main>
     </>
