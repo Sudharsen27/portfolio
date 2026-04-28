@@ -2,6 +2,13 @@ import type { CertificationItem } from "@/src/types";
 
 export const certificationsData: CertificationItem[] = [
   {
+    id: "7",
+    title: "SnowPro Associate: Platform",
+    issuer: "Snowflake",
+    year: "2026",
+    link: "https://achieve.snowflake.com/4543d63f-ee2d-439e-81c1-6cea5efa6318#acc.iPjvQuEc",
+  },
+  {
     id: "1",
     title: "Snowflake Platform Training (Ascent Program - APAC)",
     issuer: "Snowflake",
