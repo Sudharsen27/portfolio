@@ -17,12 +17,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sundar Lingam | Software Engineer | Frontend-Focused Full Stack Developer",
+  title: "Sundar Lingam | Software Engineer",
   description:
-    "Portfolio of Sundar Lingam — Software Developer with experience in full-stack development, React, Next.js, Node.js, and PostgreSQL. Building scalable web applications.",
+    "Software Engineer specializing in React.js, Next.js, TypeScript, FastAPI, PostgreSQL, Snowflake, AWS, and Docker.",
   icons: {
     icon: "/log.png",
     apple: "/log.png",
+  },
+  openGraph: {
+    title: "Sundar Lingam | Software Engineer",
+    description:
+      "Software Engineer specializing in React.js, Next.js, TypeScript, FastAPI, PostgreSQL, Snowflake, AWS, and Docker.",
+    type: "website",
   },
 };
 
@@ -32,8 +38,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${plusJakarta.variable} ${inter.variable}`}>
-      <body className="font-sans antialiased min-h-screen">
+    <html
+      lang="en"
+      className={`dark ${plusJakarta.variable} ${inter.variable}`}
+      data-scroll-behavior="smooth"
+    >
+      <body className="min-h-screen font-sans antialiased">
         {children}
         <Analytics />
         <VisitNotifier />

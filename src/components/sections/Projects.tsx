@@ -1,40 +1,31 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { projectsData } from "@/src/data/projects";
+import { featuredProjects, otherProjects } from "@/src/data/projects";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { ProjectCard } from "@/src/components/ui/ProjectCard";
+import { useInView } from "@/src/hooks/useInView";
 
-export function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
+interface ProjectsProps {
+  /** Less top padding when this is the first section on a section route */
+  isLeadSection?: boolean;
+}
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+export function Projects({ isLeadSection = false }: ProjectsProps) {
+  const { ref, inView } = useInView();
 
   return (
     <section
       id="projects"
-      ref={sectionRef}
-      className="py-20 scroll-mt-20"
+      ref={ref}
+      className={`scroll-mt-24 ${isLeadSection ? "pb-20 pt-0" : "py-20"}`}
     >
       <div className="mx-auto max-w-6xl px-4">
         <SectionTitle
-          title="Projects"
-          subtitle="Built and delivered—live apps and full-stack products I've released."
+          title="Featured Projects"
+          subtitle="Production systems I've designed and built — full-stack applications with measurable engineering impact."
         />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projectsData.map((project, index) => (
+        <div className="grid items-stretch gap-6 lg:grid-cols-2">
+          {featuredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               project={project}
@@ -42,6 +33,23 @@ export function Projects() {
               inView={inView}
             />
           ))}
+        </div>
+
+        <div className="mt-20">
+          <SectionTitle
+            title="Other Projects"
+            subtitle="Additional web applications and client deliverables."
+          />
+          <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {otherProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                inView={inView}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

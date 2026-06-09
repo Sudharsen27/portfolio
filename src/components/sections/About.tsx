@@ -1,47 +1,22 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import { aboutData } from "@/src/data/about";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
+import { useInView, fadeInUpStyle } from "@/src/hooks/useInView";
 
 export function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, inView } = useInView({ threshold: 0.2 });
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="py-20 scroll-mt-20"
-    >
+    <section id="about" ref={ref} className="scroll-mt-24 py-20">
       <div className="mx-auto max-w-6xl px-4">
         <SectionTitle
           title="About"
-          subtitle="What I bring to your team—delivery-focused and quality-minded."
+          subtitle="Full-stack engineer building enterprise applications and data platforms."
         />
         <div
           className="group relative overflow-hidden rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-8 shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:bg-zinc-800/60 hover:shadow-xl hover:shadow-blue-500/10 md:p-10"
-          style={
-            inView
-              ? {
-                  opacity: 0,
-                  animation: "fade-in-up 0.6s ease-out forwards",
-                }
-              : { opacity: 0 }
-          }
+          style={fadeInUpStyle(inView)}
         >
           <span
             className="absolute top-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-300 group-hover:w-full"
@@ -55,16 +30,18 @@ export function About() {
             ))}
           </div>
           {aboutData.highlights && aboutData.highlights.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-2 border-t border-zinc-700/50 pt-6">
+            <ul
+              className="mt-6 flex flex-wrap gap-2 border-t border-zinc-700/50 pt-6"
+              aria-label="Key highlights"
+            >
               {aboutData.highlights.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-md bg-zinc-700/80 px-3 py-1.5 text-sm font-medium text-zinc-300 ring-1 ring-zinc-600/50 transition-colors group-hover:bg-zinc-600/80 group-hover:ring-blue-500/30"
-                >
-                  {item}
-                </span>
+                <li key={item}>
+                  <span className="rounded-md bg-zinc-700/80 px-3 py-1.5 text-sm font-medium text-zinc-300 ring-1 ring-zinc-600/50 transition-colors group-hover:bg-zinc-600/80 group-hover:ring-blue-500/30">
+                    {item}
+                  </span>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
       </div>

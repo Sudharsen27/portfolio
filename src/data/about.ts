@@ -2,11 +2,11 @@ import type { AboutData } from "@/src/types";
 
 export const aboutData: AboutData = {
   summary:
-    "I build and deliver web applications that users and businesses rely on. My focus is full-stack development: frontend with React and Next.js, backend with Node.js, and databases like PostgreSQL. I have hands-on experience in testing, responsive UI/UX, and live deployments.\n\nI care about clean, testable code and working closely with product and design to deliver on time. I'm looking for a role where I can contribute to meaningful products and keep growing as an engineer.",
+    "Software Engineer with 2.5+ years of experience delivering full-stack solutions for enterprise applications and data management platforms. I specialize in building end-to-end products — designing RESTful APIs with FastAPI, modeling relational data in PostgreSQL, integrating Snowflake for analytics workloads, and shipping polished React and Next.js interfaces.\n\nAt Analytix-Hub and Wraptron Apptech, I've contributed to production systems spanning data governance, e-commerce, healthcare booking, and analytics dashboards. I work closely with product and engineering teams to translate business requirements into reliable, maintainable software — with a focus on performance, clean architecture, and on-time delivery.",
   highlights: [
-    "Full-stack (React, Next.js, Node.js)",
-    "Live apps delivered",
-    "Clean & testable code",
-    "On-time delivery",
+    "2.5+ years full-stack experience",
+    "Enterprise & data platforms",
+    "React · FastAPI · PostgreSQL · Snowflake",
+    "AWS · Docker · CI/CD",
   ],
 };

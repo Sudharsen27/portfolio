@@ -37,6 +37,7 @@ export function Navbar() {
             <li key={href}>
               <Link
                 href={href}
+                scroll
                 className={`group relative py-2 text-base font-medium transition-colors hover:text-white ${
                   pathname === href ? "text-white" : "text-zinc-400"
                 }`}
@@ -67,6 +68,7 @@ export function Navbar() {
             <li key={href}>
               <Link
                 href={href}
+                scroll
                 onClick={() => setOpen(false)}
                 className={`block rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-zinc-800 hover:text-white ${
                   pathname === href ? "text-white" : "text-zinc-400"

@@ -1,75 +1,261 @@
 "use client";
 
+
+
+import { useEffect } from "react";
 import Link from "next/link";
 import { heroData } from "@/src/data/hero";
+import { contactData } from "@/src/data/contact";
+import { resumeUrl } from "@/src/config/resume";
+
+
+
+const ctaBase =
+
+  "inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
+
+
+
+const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500`;
+
+
 
 export function Hero() {
+
+  const hasResumeUrl = Boolean(resumeUrl);
+
+
+
+  useEffect(() => {
+
+    if (!hasResumeUrl) {
+
+      console.warn(
+
+        "[Portfolio] NEXT_PUBLIC_RESUME_URL is not set. Resume button is disabled."
+
+      );
+
+    }
+
+  }, [hasResumeUrl]);
+
+
+
   return (
+
     <section
+
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden"
+
+      aria-label="Introduction"
+
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-20"
+
     >
+
       <div
+
         className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-950/10 via-transparent to-transparent"
+
         aria-hidden
+
       />
+
       <div className="mx-auto max-w-6xl px-4 py-20">
+
         <div className="relative max-w-3xl pl-0 md:pl-4">
+
           <span
-            className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b from-blue-500/0 via-blue-500 to-blue-500/0 opacity-60 md:block hidden"
+
+            className="absolute top-0 bottom-0 left-0 hidden w-0.5 rounded-full bg-gradient-to-b from-blue-500/0 via-blue-500 to-blue-500/0 opacity-60 md:block"
+
             aria-hidden
+
           />
+
           <p
+
             className="animate-fade-in text-sm font-semibold uppercase tracking-widest text-blue-400"
+
             style={{ opacity: 0, animationFillMode: "forwards" }}
+
           >
+
             {heroData.subhead}
+
           </p>
+
           <h1
+
             className="mt-4 animate-fade-in text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+
             style={{
+
               animationDelay: "0.08s",
+
               opacity: 0,
+
               animationFillMode: "forwards",
+
             }}
+
           >
+
             {heroData.headline}
+
           </h1>
-          <div
-            className="mt-5 max-w-2xl animate-fade-in space-y-4 text-lg leading-relaxed text-zinc-400"
+
+          <p
+
+            className="mt-5 animate-fade-in text-sm font-medium tracking-wide text-zinc-300 sm:text-base"
+
             style={{
+
+              animationDelay: "0.12s",
+
+              opacity: 0,
+
+              animationFillMode: "forwards",
+
+            }}
+
+          >
+
+            {heroData.techStack}
+
+          </p>
+
+          <p
+
+            className="mt-5 max-w-2xl animate-fade-in text-lg leading-relaxed text-zinc-400"
+
+            style={{
+
               animationDelay: "0.16s",
+
               opacity: 0,
+
               animationFillMode: "forwards",
+
             }}
+
           >
-            {heroData.tagline.split(/\n\n+/).map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </div>
-          <div
-            className="mt-10 flex flex-wrap gap-4 animate-fade-in"
+
+            {heroData.tagline}
+
+          </p>
+
+          <nav
+
+            className="mt-10 flex animate-fade-in flex-wrap gap-3 sm:gap-4"
+
             style={{
+
               animationDelay: "0.24s",
+
               opacity: 0,
+
               animationFillMode: "forwards",
+
             }}
+
+            aria-label="Primary actions"
+
           >
+
+            {hasResumeUrl ? (
+
+              <a
+
+                href={resumeUrl}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+                className={resumeButtonStyles}
+
+              >
+
+                Resume
+
+              </a>
+
+            ) : (
+
+              <span
+
+                className={`${resumeButtonStyles} pointer-events-none opacity-50`}
+
+                aria-disabled="true"
+
+                title="Resume unavailable"
+
+              >
+
+                Resume
+
+              </span>
+
+            )}
+
             <Link
               href="/projects"
-              className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:scale-[1.02] hover:bg-blue-500 active:scale-[0.98]"
+              className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
             >
-              View projects
+              View Projects
             </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg border border-zinc-600 px-5 py-2.5 text-sm font-medium text-zinc-200 transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-800 active:scale-[0.98]"
-            >
-              Get in touch
-            </Link>
-          </div>
+
+            {contactData.github && (
+
+              <a
+
+                href={contactData.github}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+                className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
+
+              >
+
+                GitHub
+
+              </a>
+
+            )}
+
+            {contactData.linkedIn && (
+
+              <a
+
+                href={contactData.linkedIn}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+                className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
+
+              >
+
+                LinkedIn
+
+              </a>
+
+            )}
+
+          </nav>
+
         </div>
+
       </div>
+
     </section>
+
   );
+
 }
+
