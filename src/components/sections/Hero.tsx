@@ -1,47 +1,16 @@
 "use client";
 
-
-
-import { useEffect } from "react";
 import Link from "next/link";
 import { heroData } from "@/src/data/hero";
 import { contactData } from "@/src/data/contact";
 import { resumeUrl } from "@/src/config/resume";
 
-
-
 const ctaBase =
-
   "inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
-
-
 
 const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500`;
 
-
-
 export function Hero() {
-
-  const hasResumeUrl = Boolean(resumeUrl);
-
-
-
-  useEffect(() => {
-
-    if (!hasResumeUrl) {
-
-      console.warn(
-
-        "[Portfolio] NEXT_PUBLIC_RESUME_URL is not set. Resume button is disabled."
-
-      );
-
-    }
-
-  }, [hasResumeUrl]);
-
-
-
   return (
 
     <section
@@ -164,41 +133,14 @@ export function Hero() {
 
           >
 
-            {hasResumeUrl ? (
-
-              <a
-
-                href={resumeUrl}
-
-                target="_blank"
-
-                rel="noopener noreferrer"
-
-                className={resumeButtonStyles}
-
-              >
-
-                Resume
-
-              </a>
-
-            ) : (
-
-              <span
-
-                className={`${resumeButtonStyles} pointer-events-none opacity-50`}
-
-                aria-disabled="true"
-
-                title="Resume unavailable"
-
-              >
-
-                Resume
-
-              </span>
-
-            )}
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={resumeButtonStyles}
+            >
+              Resume
+            </a>
 
             <Link
               href="/projects"
