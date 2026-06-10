@@ -7,16 +7,26 @@ interface UseInViewOptions {
   rootMargin?: string;
 }
 
-export function useInView({
-  threshold = 0.15,
-  rootMargin = "0px 0px -40px 0px",
+function isElementInViewport(el: HTMLElement): boolean {
+  const rect = el.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+export function useInView<T extends HTMLElement = HTMLElement>({
+  threshold = 0,
+  rootMargin = "0px",
 }: UseInViewOptions = {}) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    // Content already on screen (e.g. /projects on mobile) must not stay hidden
+    if (isElementInViewport(el)) {
+      setInView(true);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
