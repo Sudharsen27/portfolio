@@ -5,7 +5,7 @@ export const medilinkCaseStudy: CaseStudyData = {
   title: "MediLink",
   subtitle:
     "Secure healthcare appointment booking platform with JWT authentication and PostgreSQL-backed scheduling.",
-  liveUrl: "https://medilink-frontendapp.pages.dev/login",
+  liveUrl: "https://medilink-frontend-ml45.vercel.app/",
   repoUrl: "https://github.com/Sudharsen27",
   overview:
     "MediLink is a full-stack healthcare appointment booking application that connects patients with providers through a secure, responsive web interface. Built with React on the frontend and Node.js/Express on the backend, it uses PostgreSQL for relational data storage and JWT for authenticated access to sensitive patient and appointment records.",

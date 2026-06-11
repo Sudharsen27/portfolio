@@ -113,7 +113,7 @@ export const featuredProjects: Project[] = [
     businessImpact:
       "Streamlined appointment booking for healthcare providers, reducing phone-based scheduling overhead and improving patient access.",
     tags: ["React", "Node.js", "PostgreSQL", "JWT", "Healthcare"],
-    href: "https://medilink-frontendapp.pages.dev/login",
+    href: "https://medilink-frontend-ml45.vercel.app/",
     repo: "https://github.com/Sudharsen27",
     caseStudyHref: "/projects/medilink",
     featured: true,
