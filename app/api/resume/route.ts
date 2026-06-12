@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 /**
- * Server-side resume redirect — reads env at request time (not build time).
- * Use when NEXT_PUBLIC_RESUME_URL was not set during the Vercel build.
+ * Server-side resume redirect — reads NEXT_PUBLIC_RESUME_URL at request time.
+ * Hero button always opens /api/resume so production works without
+ * client-side env inlining at build time.
  */
 export async function GET() {
   const url =
@@ -18,5 +21,10 @@ export async function GET() {
     );
   }
 
-  return NextResponse.redirect(url, 302);
+  // Bust CDN/browser cache so updated Supabase PDFs show immediately
+  const redirectUrl = url.includes("?")
+    ? `${url}&t=${Date.now()}`
+    : `${url}?t=${Date.now()}`;
+
+  return NextResponse.redirect(redirectUrl, 302);
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
 import { heroData } from "@/src/data/hero";
 import { contactData } from "@/src/data/contact";
@@ -11,25 +10,8 @@ const ctaBase =
 const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500`;
 
 export function Hero() {
-  useEffect(() => {
-    console.log("Resume URL:", process.env.NEXT_PUBLIC_RESUME_URL);
-
-    if (!process.env.NEXT_PUBLIC_RESUME_URL) {
-      console.warn(
-        "NEXT_PUBLIC_RESUME_URL is not configured — /api/resume fallback will be used"
-      );
-    }
-  }, []);
-
   function handleResumeClick() {
-    const url = process.env.NEXT_PUBLIC_RESUME_URL;
-
-    if (url) {
-      window.open(url, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    // Production fallback: server reads env at runtime (works after Vercel env is set)
+    // Always use server redirect — works in production without client env at build time
     window.open("/api/resume", "_blank", "noopener,noreferrer");
   }
 
