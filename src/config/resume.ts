@@ -1,15 +1,16 @@
 /**
- * Public Supabase resume URL — used when NEXT_PUBLIC_RESUME_URL is not set
- * (e.g. production builds where .env is not deployed).
+ * Single source of truth for the resume URL.
  *
- * Env var still takes precedence so you can override per environment.
+ * NEXT_PUBLIC_* variables are inlined at build time — set
+ * NEXT_PUBLIC_RESUME_URL in Vercel (Production, Preview, Development)
+ * and in .env.local for local dev.
  *
  * To update the resume in the future, upload a new PDF with the same
  * filename to Supabase Storage and overwrite the existing file.
  * No code changes are required.
  */
-export const DEFAULT_RESUME_URL =
-  "https://ukkhbrdxrfgxqivqyakn.supabase.co/storage/v1/object/public/assets/Sundar_Lingam_Resume.pdf";
+export const resumeUrl = process.env.NEXT_PUBLIC_RESUME_URL ?? "";
 
-export const resumeUrl =
-  process.env.NEXT_PUBLIC_RESUME_URL?.trim() || DEFAULT_RESUME_URL;
+export function isResumeConfigured(): boolean {
+  return Boolean(resumeUrl.trim());
+}
