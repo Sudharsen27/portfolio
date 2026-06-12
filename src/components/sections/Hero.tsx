@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { heroData } from "@/src/data/hero";
 import { contactData } from "@/src/data/contact";
-import { isResumeConfigured } from "@/src/config/resume";
 
 const ctaBase =
   "inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
@@ -12,24 +11,26 @@ const ctaBase =
 const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-500`;
 
 export function Hero() {
-  const resumeConfigured = isResumeConfigured();
-
   useEffect(() => {
-    // Temporary debug — remove after verifying production
     console.log("Resume URL:", process.env.NEXT_PUBLIC_RESUME_URL);
 
     if (!process.env.NEXT_PUBLIC_RESUME_URL) {
-      console.warn("NEXT_PUBLIC_RESUME_URL is not configured");
+      console.warn(
+        "NEXT_PUBLIC_RESUME_URL is not configured — /api/resume fallback will be used"
+      );
     }
   }, []);
 
   function handleResumeClick() {
     const url = process.env.NEXT_PUBLIC_RESUME_URL;
-    if (!url) {
-      console.warn("NEXT_PUBLIC_RESUME_URL is not configured");
+
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
       return;
     }
-    window.open(url, "_blank", "noopener,noreferrer");
+
+    // Production fallback: server reads env at runtime (works after Vercel env is set)
+    window.open("/api/resume", "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -93,23 +94,13 @@ export function Hero() {
             }}
             aria-label="Primary actions"
           >
-            {resumeConfigured ? (
-              <button
-                type="button"
-                onClick={handleResumeClick}
-                className={resumeButtonStyles}
-              >
-                Resume
-              </button>
-            ) : (
-              <span
-                className={`${resumeButtonStyles} pointer-events-none opacity-50`}
-                aria-disabled="true"
-                title="Resume unavailable"
-              >
-                Resume
-              </span>
-            )}
+            <button
+              type="button"
+              onClick={handleResumeClick}
+              className={resumeButtonStyles}
+            >
+              Resume
+            </button>
             <Link
               href="/projects"
               className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
