@@ -11,8 +11,7 @@ const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-b
 
 export function Hero() {
   function handleResumeClick() {
-    // Always use server redirect — works in production without client env at build time
-    window.open("/api/resume", "_blank", "noopener,noreferrer");
+    window.open("/resume.pdf", "_blank", "noopener,noreferrer");
   }
 
   return (
