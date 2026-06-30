@@ -46,6 +46,48 @@ export const featuredProjects: Project[] = [
     featured: true,
   },
   {
+    id: "10",
+    slug: "nexora-crm",
+    title: "Nexora CRM",
+    description:
+      "Production-grade multi-tenant SaaS CRM with lead management, sales pipelines, role-based access control, and analytics dashboards.",
+    problem:
+      "Sales teams needed a centralized platform to track leads, manage pipeline stages, and enforce role-based permissions across multiple organizations without data leakage between tenants.",
+    technologies: [
+      "Next.js",
+      "FastAPI",
+      "PostgreSQL",
+      "TypeScript",
+      "Python",
+      "JWT",
+    ],
+    keyFeatures: [
+      "Multi-tenant architecture with isolated org data",
+      "JWT authentication and role-based access control",
+      "Lead management and sales pipeline workflows",
+      "Analytics dashboards for pipeline and conversion metrics",
+      "RESTful API with tenant-scoped queries",
+    ],
+    challenges: [
+      "Designing tenant isolation at the database and API layer without sacrificing query performance",
+      "Implementing RBAC that scales across admin, manager, and rep roles per organization",
+      "Building analytics aggregations that stay fast as pipeline data grows",
+    ],
+    businessImpact:
+      "Multi-tenant SaaS CRM platform shipped end-to-end.",
+    tags: [
+      "Next.js",
+      "FastAPI",
+      "PostgreSQL",
+      "TypeScript",
+      "Python",
+      "JWT",
+    ],
+    href: "https://nexora-crm-iota.vercel.app",
+    caseStudyHref: "/projects/nexora-crm",
+    featured: true,
+  },
+  {
     id: "7",
     slug: "shop-sphere",
     title: "Shop Sphere",

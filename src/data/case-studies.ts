@@ -1,11 +1,13 @@
 import type { CaseStudyData } from "@/src/types";
 import { mdqmCaseStudy } from "./mdqm-case-study";
+import { nexoraCrmCaseStudy } from "./nexora-crm-case-study";
 import { shopSphereCaseStudy } from "./shop-sphere-case-study";
 import { medilinkCaseStudy } from "./medilink-case-study";
 import { studentDashboardCaseStudy } from "./student-dashboard-case-study";
 
 export const caseStudies: Record<string, CaseStudyData> = {
   mdqm: mdqmCaseStudy,
+  "nexora-crm": nexoraCrmCaseStudy,
   "shop-sphere": shopSphereCaseStudy,
   medilink: medilinkCaseStudy,
   "student-dashboard": studentDashboardCaseStudy,
