@@ -3,6 +3,7 @@
 import { contactData } from "@/src/data/contact";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { useInView, fadeInUpStyle } from "@/src/hooks/useInView";
+import { trackVisitorEvent } from "@/src/utils/tracking/visitorEvents";
 
 const contactItems = [
   {
@@ -62,6 +63,12 @@ export function Contact() {
                       ? "noopener noreferrer"
                       : undefined
                   }
+                  onClick={() => {
+                    if (item.label === "Email") trackVisitorEvent("email_clicked");
+                    if (item.label === "GitHub") trackVisitorEvent("github_clicked");
+                    if (item.label === "LinkedIn")
+                      trackVisitorEvent("linkedin_clicked");
+                  }}
                   className="group flex min-h-[44px] flex-col justify-center gap-1 rounded-lg border border-zinc-700/50 bg-zinc-800/60 p-3 transition-all hover:border-blue-500/40 hover:bg-zinc-700/50 sm:min-h-0 sm:flex-row sm:items-center sm:gap-4 sm:p-4"
                 >
                   <span className="text-xs font-medium uppercase tracking-wider text-blue-400 sm:text-sm">
@@ -89,6 +96,7 @@ export function Contact() {
           <div className="mt-6 flex flex-wrap gap-3 border-t border-zinc-700/50 pt-6">
             <a
               href={`mailto:${contactData.email}?subject=Opportunity%20%E2%80%94%20Sundar%20Lingam`}
+              onClick={() => trackVisitorEvent("email_clicked")}
               className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:scale-[1.02] hover:bg-blue-500 active:scale-[0.98]"
             >
               Get in Touch
@@ -98,6 +106,7 @@ export function Contact() {
                 href={contactData.linkedIn}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackVisitorEvent("linkedin_clicked")}
                 className="inline-flex items-center justify-center rounded-lg border border-zinc-600 px-5 py-2.5 text-sm font-medium text-zinc-200 transition-all duration-200 hover:scale-[1.02] hover:bg-zinc-800 active:scale-[0.98]"
               >
                 Connect on LinkedIn

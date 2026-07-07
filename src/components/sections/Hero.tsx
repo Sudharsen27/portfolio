@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { heroData } from "@/src/data/hero";
 import { contactData } from "@/src/data/contact";
+import { trackVisitorEvent } from "@/src/utils/tracking/visitorEvents";
 
 const ctaBase =
   "inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900";
@@ -11,7 +12,12 @@ const resumeButtonStyles = `${ctaBase} bg-blue-600 text-white shadow-lg shadow-b
 
 export function Hero() {
   function handleResumeClick() {
+    trackVisitorEvent("resume_viewed");
     window.open("/resume.pdf", "_blank", "noopener,noreferrer");
+  }
+
+  function handleResumeDownload() {
+    trackVisitorEvent("resume_downloaded");
   }
 
   return (
@@ -78,6 +84,7 @@ export function Hero() {
             <button
               type="button"
               onClick={handleResumeClick}
+              onContextMenu={handleResumeDownload}
               className={resumeButtonStyles}
             >
               Resume
@@ -93,6 +100,7 @@ export function Hero() {
                 href={contactData.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackVisitorEvent("github_clicked")}
                 className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
               >
                 GitHub
@@ -103,6 +111,7 @@ export function Hero() {
                 href={contactData.linkedIn}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackVisitorEvent("linkedin_clicked")}
                 className={`${ctaBase} border border-zinc-600 text-zinc-200 hover:bg-zinc-800`}
               >
                 LinkedIn
