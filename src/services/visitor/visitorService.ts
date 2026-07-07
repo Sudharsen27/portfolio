@@ -6,6 +6,11 @@ import {
 import { classifyReferrer, isAiReferrer } from "@/src/helpers/classifyReferrer";
 import { classifyVisitor } from "@/src/helpers/classifyVisitor";
 import { detectHumanOrBot } from "@/src/helpers/humanOrBot";
+import {
+  isBrowserInfoMissing,
+  parseBrowserFromUserAgent,
+} from "@/src/helpers/parseBrowser";
+import { visitorDebug } from "@/src/helpers/visitorDebug";
 import { formatLocation, resolveGeo } from "@/src/services/geo/ipwho";
 import type {
   ClientVisitorPayload,
@@ -39,6 +44,21 @@ export async function buildVisitorIntelligence(
   const acceptLanguage = request.headers.get("accept-language");
 
   const geo = await resolveGeo(ip, request.headers);
+  visitorDebug(
+    "geo:resolved",
+    geo
+      ? {
+          city: geo.city,
+          region: geo.region,
+          country: geo.country,
+          org: geo.organization,
+          isp: geo.isp,
+          source: geo.source,
+        }
+      : null,
+    "server"
+  );
+
   const referrerClass = classifyReferrer(primaryReferrer);
   const visitorCategory = classifyVisitor(primaryReferrer, userAgent);
   const { type: humanOrBot } = detectHumanOrBot(userAgent);
@@ -63,12 +83,10 @@ export async function buildVisitorIntelligence(
     events,
   });
 
-  const browser = client?.browser ?? {
-    browser: "Unknown",
-    browserVersion: "",
-    os: "Unknown",
-    deviceType: "desktop",
-  };
+  let browser = client?.browser ?? parseBrowserFromUserAgent(userAgent);
+  if (isBrowserInfoMissing(browser)) {
+    browser = parseBrowserFromUserAgent(userAgent);
+  }
 
   return {
     timestamp,

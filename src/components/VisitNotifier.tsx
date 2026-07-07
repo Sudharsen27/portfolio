@@ -10,6 +10,7 @@ import {
   type SessionTracker,
 } from "@/src/utils/tracking/sessionTracker";
 import { pathnameToPageLabel } from "@/src/utils/tracking/pageLabels";
+import { visitorDebug } from "@/src/helpers/visitorDebug";
 
 const STORAGE_KEY = "portfolio_visit_notified";
 
@@ -21,36 +22,59 @@ export function VisitNotifier() {
   const pathname = usePathname();
   const trackerRef = useRef<SessionTracker | null>(null);
   const sentRef = useRef(false);
+  const pendingSendRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
+    if (sessionStorage.getItem(STORAGE_KEY)) {
+      visitorDebug("session:skipped", "already notified this session", "client");
+      return;
+    }
 
     let disposed = false;
     let unbindEvents: (() => void) | undefined;
     let unobserveSections: (() => void) | undefined;
-    let pendingSend = false;
 
-    const sendOnce = () => {
+    const sendOnce = (tracker?: SessionTracker | null) => {
       if (sentRef.current || sessionStorage.getItem(STORAGE_KEY)) return;
-      const tracker = trackerRef.current;
-      if (!tracker) {
-        pendingSend = true;
+
+      const activeTracker = tracker ?? trackerRef.current;
+      if (!activeTracker) {
+        pendingSendRef.current = true;
+        visitorDebug("send:deferred", "tracker not ready yet", "client");
         return;
       }
 
       sentRef.current = true;
+      pendingSendRef.current = false;
       sessionStorage.setItem(STORAGE_KEY, "1");
-      sendVisitBeacon(tracker.buildPayload());
+
+      const payload = activeTracker.buildPayload();
+      visitorDebug("send:dispatch", payload, "client");
+      sendVisitBeacon(payload);
     };
 
-    void createSessionTracker().then((tracker) => {
-      if (disposed) return;
-      trackerRef.current = tracker;
-      unbindEvents = bindVisitorTrackEvents(tracker);
-      unobserveSections = observeSections(tracker, () => {});
-      if (pendingSend) sendOnce();
-    });
+    void createSessionTracker()
+      .then((tracker) => {
+        trackerRef.current = tracker;
+        visitorDebug("tracker:ready", { visitorId: tracker.visitorId }, "client");
+
+        if (!disposed) {
+          unbindEvents = bindVisitorTrackEvents(tracker);
+          unobserveSections = observeSections(tracker, () => {});
+        }
+
+        if (pendingSendRef.current || disposed) {
+          sendOnce(tracker);
+        }
+      })
+      .catch((error) => {
+        visitorDebug(
+          "tracker:error",
+          error instanceof Error ? error.message : error,
+          "client"
+        );
+      });
 
     const onHide = () => {
       if (document.visibilityState === "hidden") sendOnce();
@@ -77,7 +101,9 @@ export function VisitNotifier() {
   useEffect(() => {
     const tracker = trackerRef.current;
     if (!tracker) return;
-    tracker.recordPage(pathnameToPageLabel(pathname));
+    const label = pathnameToPageLabel(pathname);
+    tracker.recordPage(label);
+    visitorDebug("page:recorded", label, "client");
   }, [pathname]);
 
   return null;

@@ -47,6 +47,16 @@ function interestColor(level: string): string {
   }
 }
 
+function contactClicked(data: VisitorIntelligence): boolean {
+  const e = data.events;
+  return (
+    e.emailClicked ||
+    e.linkedInClicked ||
+    e.githubClicked ||
+    e.phoneClicked
+  );
+}
+
 export function formatVisitorEmail(data: VisitorIntelligence): {
   subject: string;
   text: string;
@@ -86,6 +96,7 @@ export function formatVisitorEmail(data: VisitorIntelligence): {
     `LinkedIn Clicked: ${yesNo(data.events.linkedInClicked)}`,
     `GitHub Clicked: ${yesNo(data.events.githubClicked)}`,
     `Phone Clicked: ${yesNo(data.events.phoneClicked)}`,
+    `Contact Clicked: ${yesNo(contactClicked(data))}`,
     `Contact Opened: ${yesNo(data.events.contactFormOpened)}`,
   ].join("\n");
 
@@ -123,7 +134,10 @@ export function formatVisitorEmail(data: VisitorIntelligence): {
     ])}
 
     ${card("Location & Network", [
-      ["Location", `<strong>${escapeHtml(data.location)}</strong>`],
+      ["City", escapeHtml(data.geo?.city || "—")],
+      ["Region", escapeHtml(data.geo?.region || "—")],
+      ["Country", escapeHtml(data.geo?.country || "—")],
+      ["Full Location", `<strong>${escapeHtml(data.location)}</strong>`],
       ["Organization", escapeHtml(data.geo?.organization || "—")],
       ["ISP", escapeHtml(data.geo?.isp || "—")],
       ["Connection", escapeHtml(data.geo?.connectionType || "—")],
@@ -132,7 +146,8 @@ export function formatVisitorEmail(data: VisitorIntelligence): {
     ])}
 
     ${card("Device & Browser", [
-      ["Browser", escapeHtml(`${data.browser.browser} ${data.browser.browserVersion}`.trim())],
+      ["Browser", escapeHtml(data.browser.browser)],
+      ["Browser Version", escapeHtml(data.browser.browserVersion || "—")],
       ["OS", escapeHtml(data.browser.os)],
       ["Device", escapeHtml(data.browser.deviceType)],
       ["CPU", escapeHtml(data.browser.cpuArchitecture || "—")],
@@ -163,6 +178,7 @@ export function formatVisitorEmail(data: VisitorIntelligence): {
     ${card("Engagement", [
       ["Resume Viewed", yesNo(data.events.resumeViewed)],
       ["Resume Downloaded", yesNo(data.events.resumeDownloaded)],
+      ["Contact Clicked", yesNo(contactClicked(data))],
       ["Email Clicked", yesNo(data.events.emailClicked)],
       ["LinkedIn Clicked", yesNo(data.events.linkedInClicked)],
       ["GitHub Clicked", yesNo(data.events.githubClicked)],

@@ -1,11 +1,12 @@
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { UAParser } from "ua-parser-js";
 import type {
   ClientBrowserInfo,
   ClientVisitorPayload,
   VisitorInteractionEvents,
   VisitorTrackEvent,
 } from "@/src/types/visitor";
+import { parseBrowserFromUserAgent } from "@/src/helpers/parseBrowser";
+import { visitorDebug } from "@/src/helpers/visitorDebug";
 import {
   pathnameToPageLabel,
   sectionIdToPageLabel,
@@ -36,26 +37,9 @@ const EMPTY_EVENTS: VisitorInteractionEvents = {
 };
 
 export function parseBrowserInfo(): ClientBrowserInfo {
-  const parser = new UAParser();
-  const browser = parser.getBrowser();
-  const os = parser.getOS();
-  const device = parser.getDevice();
-  const cpu = parser.getCPU();
-
-  let deviceType = device.type ?? "desktop";
-  if (deviceType === "mobile" || deviceType === "tablet") {
-    // keep
-  } else if (/mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
-    deviceType = "mobile";
-  }
-
-  return {
-    browser: browser.name ?? "Unknown",
-    browserVersion: browser.version ?? "",
-    os: [os.name, os.version].filter(Boolean).join(" ") || "Unknown",
-    deviceType,
-    cpuArchitecture: cpu.architecture,
-  };
+  return parseBrowserFromUserAgent(
+    typeof navigator !== "undefined" ? navigator.userAgent : null
+  );
 }
 
 function applyTrackEvent(
@@ -103,10 +87,14 @@ export interface SessionTracker {
 }
 
 export async function createSessionTracker(): Promise<SessionTracker> {
+  visitorDebug("fingerprint:loading", undefined, "client");
   const fp = await FingerprintJS.load();
   const result = await fp.get();
   const visitorId = result.visitorId;
+  visitorDebug("fingerprint:ready", { visitorId }, "client");
+
   const { visitNumber, isReturning } = incrementClientVisitCount(visitorId);
+  visitorDebug("visit:count", { visitNumber, isReturning }, "client");
   const visitStart = new Date();
 
   const pagesViewed = new Set<string>();
@@ -217,18 +205,33 @@ export function bindVisitorTrackEvents(
   return () => window.removeEventListener(VISITOR_TRACK_EVENT, handler);
 }
 
-export function sendVisitBeacon(payload: ClientVisitorPayload): boolean {
-  const blob = new Blob([JSON.stringify(payload)], {
-    type: "application/json",
-  });
-  if (navigator.sendBeacon("/api/notify-visit", blob)) return true;
+export function sendVisitBeacon(payload: ClientVisitorPayload): void {
+  const body = JSON.stringify(payload);
+  visitorDebug("send:payload", payload, "client");
 
-  fetch("/api/notify-visit", {
+  void fetch("/api/notify-visit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body,
     keepalive: true,
-  }).catch(() => {});
-
-  return true;
+  })
+    .then(async (res) => {
+      const data = await res.json().catch(() => ({}));
+      visitorDebug("send:response", { status: res.status, data }, "client");
+    })
+    .catch((error) => {
+      visitorDebug(
+        "send:error",
+        error instanceof Error ? error.message : error,
+        "client"
+      );
+      try {
+        navigator.sendBeacon(
+          "/api/notify-visit",
+          new Blob([body], { type: "application/json" })
+        );
+      } catch {
+        // ignore
+      }
+    });
 }

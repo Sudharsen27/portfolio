@@ -1,12 +1,12 @@
 import { sendVisitorNotification } from "@/src/services/visitor/sendNotification";
-import {
-  buildVisitorIntelligence,
-} from "@/src/services/visitor/visitorService";
+import { buildVisitorIntelligence } from "@/src/services/visitor/visitorService";
 import {
   mergeVisitorPersistence,
   persistVisitorVisit,
 } from "@/src/services/visitor/visitorStorage";
 import { formatVisitorEmail } from "@/src/services/email/visitorEmailFormatter";
+import { parseRequestBody } from "@/src/helpers/parseRequestBody";
+import { visitorDebug } from "@/src/helpers/visitorDebug";
 import type { ClientVisitorPayload } from "@/src/types/visitor";
 
 function parseClientPayload(body: unknown): ClientVisitorPayload | null {
@@ -127,12 +127,28 @@ export async function processVisitNotification(request: Request) {
 
   let rawBody: unknown = {};
   try {
-    rawBody = await request.json();
+    rawBody = await parseRequestBody(request);
   } catch {
     rawBody = {};
   }
 
+  visitorDebug("body:parsed", rawBody, "server");
+
   let client = parseClientPayload(rawBody) ?? legacyPayload(rawBody);
+
+  visitorDebug(
+    "client:resolved",
+    client
+      ? {
+          visitorId: client.visitorId,
+          visitNumber: client.visitNumber,
+          pages: client.pagesViewed,
+          browser: client.browser,
+          durationSeconds: client.durationSeconds,
+        }
+      : null,
+    "server"
+  );
 
   if (client && client.visitorId !== "legacy-session") {
     const persisted = await persistVisitorVisit(
@@ -143,7 +159,26 @@ export async function processVisitNotification(request: Request) {
   }
 
   const intelligence = await buildVisitorIntelligence(request, client);
+  visitorDebug(
+    "intelligence:built",
+    {
+      visitorId: intelligence.visitorId,
+      category: intelligence.visitorCategory,
+      location: intelligence.location,
+      org: intelligence.geo?.organization,
+      isp: intelligence.geo?.isp,
+      browser: intelligence.browser,
+      interestScore: intelligence.interestScore,
+    },
+    "server"
+  );
+
   const email = formatVisitorEmail(intelligence);
+  visitorDebug(
+    "email:formatted",
+    { subject: email.subject, textLines: email.text.split("\n").length },
+    "server"
+  );
 
   const result = await sendVisitorNotification({
     webhookUrl,

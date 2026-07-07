@@ -104,25 +104,22 @@ export async function resolveGeo(
   headers: Headers
 ): Promise<GeoInfo | null> {
   const vercelGeo = geoFromVercelHeaders(headers);
-  if (vercelGeo) {
-    if (ip && !isPrivateIp(ip)) {
-      const ipwho = await fetchGeoFromIpWho(ip);
-      if (ipwho) {
-        return {
-          ...ipwho,
-          city: ipwho.city || vercelGeo.city,
-          region: ipwho.region || vercelGeo.region,
-          country: ipwho.country || vercelGeo.country,
-          countryCode: ipwho.countryCode || vercelGeo.countryCode,
-        };
-      }
-    }
-    return vercelGeo;
+  const ipwhoGeo =
+    ip && !isPrivateIp(ip) ? await fetchGeoFromIpWho(ip) : null;
+
+  if (ipwhoGeo && vercelGeo) {
+    return {
+      ...ipwhoGeo,
+      city: ipwhoGeo.city || vercelGeo.city,
+      region: ipwhoGeo.region || vercelGeo.region,
+      country: ipwhoGeo.country || vercelGeo.country,
+      countryCode: ipwhoGeo.countryCode || vercelGeo.countryCode,
+      source: "ipwhois",
+    };
   }
 
-  if (ip && !isPrivateIp(ip)) {
-    return fetchGeoFromIpWho(ip);
-  }
+  if (ipwhoGeo) return ipwhoGeo;
+  if (vercelGeo) return vercelGeo;
 
   return null;
 }
