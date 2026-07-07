@@ -131,12 +131,14 @@ function buildVisitorInfo(
     "——— Location (who & where) ———",
     `Location: ${location}`,
   ];
+  const lat = formatCoord(geo?.latitude);
+  const lng = formatCoord(geo?.longitude);
   if (geo) {
     if (geo.timezone) lines.push(`Timezone: ${geo.timezone}`);
     if (geo.postal) lines.push(`Postal: ${geo.postal}`);
-    if (geo.latitude != null && geo.longitude != null) {
-      lines.push(`Coordinates: ${geo.latitude.toFixed(4)}, ${geo.longitude.toFixed(4)}`);
-      lines.push(`Map: https://www.google.com/maps?q=${geo.latitude},${geo.longitude}`);
+    if (lat != null && lng != null) {
+      lines.push(`Coordinates: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+      lines.push(`Map: https://www.google.com/maps?q=${lat},${lng}`);
     }
     if (geo.org) lines.push(`Org/ISP: ${geo.org}`);
     if (geo.isp && geo.isp !== geo.org) lines.push(`ISP: ${geo.isp}`);
@@ -169,7 +171,7 @@ function buildVisitorInfo(
     <p style="margin:4px 0;"><strong>${escapeHtml(location)}</strong></p>
     ${geo?.timezone ? `<p style="margin:4px 0;">Timezone: ${escapeHtml(geo.timezone)}</p>` : ""}
     ${geo?.postal ? `<p style="margin:4px 0;">Postal: ${escapeHtml(geo.postal)}</p>` : ""}
-    ${geo?.latitude != null && geo?.longitude != null ? `<p style="margin:4px 0;"><a href="https://www.google.com/maps?q=${geo.latitude},${geo.longitude}">View on map</a> (${geo.latitude.toFixed(4)}, ${geo.longitude.toFixed(4)})</p>` : ""}
+    ${lat != null && lng != null ? `<p style="margin:4px 0;"><a href="https://www.google.com/maps?q=${lat},${lng}">View on map</a> (${lat.toFixed(4)}, ${lng.toFixed(4)})</p>` : ""}
     ${geo?.org ? `<p style="margin:4px 0;">Org/ISP: ${escapeHtml(geo.org)}</p>` : ""}
     ${geo?.isp && geo.isp !== geo.org ? `<p style="margin:4px 0;">ISP: ${escapeHtml(geo.isp)}</p>` : ""}
   </section>
@@ -198,10 +200,19 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+/** Geo APIs sometimes return coordinates as strings; avoid .toFixed() crashes on Edge. */
+function formatCoord(value: number | string | undefined | null): number | null {
+  if (value == null || value === "") return null;
+  const n = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
 export async function POST(request: Request) {
+  try {
   const webhookUrl = process.env.NOTIFY_WEBHOOK_URL;
   const emailTo = process.env.NOTIFY_EMAIL_TO;
   const resendKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.NOTIFY_FROM_EMAIL || "onboarding@resend.dev";
 
   const isConfigured = Boolean(webhookUrl) || Boolean(emailTo && resendKey);
   if (!isConfigured) {
@@ -274,6 +285,7 @@ export async function POST(request: Request) {
     client
   );
   let ok = false;
+  const errors: string[] = [];
 
   if (webhookUrl) {
     try {
@@ -286,8 +298,9 @@ export async function POST(request: Request) {
         }),
       });
       if (res.ok) ok = true;
-    } catch {
-      // ignore
+      else errors.push(`webhook: HTTP ${res.status}`);
+    } catch (e) {
+      errors.push(`webhook: ${e instanceof Error ? e.message : "request failed"}`);
     }
   }
 
@@ -300,7 +313,7 @@ export async function POST(request: Request) {
           Authorization: `Bearer ${resendKey}`,
         },
         body: JSON.stringify({
-          from: "onboarding@resend.dev",
+          from: fromEmail,
           to: [emailTo],
           subject: "🔔 Someone viewed your portfolio",
           text: message,
@@ -308,10 +321,24 @@ export async function POST(request: Request) {
         }),
       });
       if (res.ok) ok = true;
-    } catch {
-      // ignore
+      else {
+        const body = await res.text().catch(() => "");
+        errors.push(`resend: HTTP ${res.status}${body ? ` — ${body.slice(0, 200)}` : ""}`);
+      }
+    } catch (e) {
+      errors.push(`resend: ${e instanceof Error ? e.message : "request failed"}`);
     }
   }
 
-  return NextResponse.json({ ok });
+  return NextResponse.json({ ok, ...(errors.length ? { errors } : {}) });
+  } catch (e) {
+    console.error("[notify-visit]", e);
+    return NextResponse.json(
+      {
+        ok: false,
+        error: e instanceof Error ? e.message : "Internal error",
+      },
+      { status: 500 }
+    );
+  }
 }
