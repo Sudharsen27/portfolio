@@ -289,7 +289,7 @@ export const otherProjects: Project[] = [
     businessImpact:
       "Increased online visibility for the institution with fast global content delivery.",
     tags: ["Next.js", "Cloudflare Pages", "SEO"],
-    href: "https://schoolofsustainability-astro-home.pages.dev/",
+    href: "https://sos-website-ruby.vercel.app/",
     repo: "https://github.com/Sudharsen27",
   },
 ];
