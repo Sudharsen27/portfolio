@@ -2,9 +2,26 @@ import type { HeroData } from "@/src/types";
 
 export const heroData: HeroData = {
   headline: "Sundar Lingam",
-  subhead: "Software Engineer",
-  techStack:
-    "React.js • Next.js • TypeScript • FastAPI • PostgreSQL • Snowflake",
-  tagline:
-    "I build scalable full-stack applications and data management platforms — from responsive React frontends to production-grade FastAPI services, PostgreSQL schemas, and Snowflake-backed analytics pipelines.",
+  subhead: "Full Stack Software Engineer",
+  tagline: "Building Enterprise-Grade Full-Stack Applications",
+  techCategories: [
+    {
+      label: "Frontend",
+      skills: ["React.js", "Next.js", "TypeScript"],
+    },
+    {
+      label: "Backend",
+      skills: ["FastAPI", "Node.js", "Express.js"],
+    },
+    {
+      label: "Database",
+      skills: ["PostgreSQL", "Snowflake"],
+    },
+    {
+      label: "Cloud",
+      skills: ["AWS"],
+    },
+  ],
+  description:
+    "Building scalable full-stack applications with React, Next.js, FastAPI, Node.js, PostgreSQL, Snowflake, and AWS. Passionate about creating secure, high-performance software for modern business solutions.",
 };

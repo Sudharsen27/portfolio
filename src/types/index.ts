@@ -5,13 +5,17 @@ export interface NavLink {
 
 export interface SkillCategory {
   title: string;
+  icon: string;
   items: string[];
 }
 
 export interface ExperienceItem {
   role: string;
   company: string;
+  location: string;
   period: string;
+  technologies?: string[];
+  primaryProject?: string;
   highlights: string[];
 }
 
@@ -37,19 +41,43 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   year: string;
+  category: string;
+  icon: string;
+  verifyUrl?: string | null;
+  certificateUrl?: string | null;
+  /** @deprecated Prefer certificateUrl */
   link?: string | null;
+}
+
+export interface HeroTechCategory {
+  label: string;
+  skills: string[];
 }
 
 export interface HeroData {
   headline: string;
   subhead: string;
-  techStack: string;
   tagline: string;
+  techCategories: HeroTechCategory[];
+  description: string;
+}
+
+export interface AboutCapability {
+  title: string;
+  icon: string;
+}
+
+export interface AboutHighlight {
+  label: string;
+  icon: string;
 }
 
 export interface AboutData {
+  subtitle: string;
   summary: string;
-  highlights?: string[];
+  closing: string;
+  capabilities: AboutCapability[];
+  highlights: AboutHighlight[];
 }
 
 export interface ContactData {
@@ -58,6 +86,11 @@ export interface ContactData {
   linkedIn?: string;
   github?: string;
   location?: string;
+  portfolioUrl?: string;
+  resumeUrl?: string;
+  subtitle: string;
+  introTitle: string;
+  introParagraphs: string[];
   cta: string;
 }
 

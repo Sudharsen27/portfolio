@@ -34,6 +34,7 @@ export function Button({
       <a
         href={href}
         className={styles}
+        onClick={props.onClick as unknown as React.MouseEventHandler<HTMLAnchorElement>}
         {...(isExternal && {
           target: "_blank",
           rel: "noopener noreferrer",

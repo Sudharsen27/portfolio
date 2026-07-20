@@ -27,7 +27,7 @@ export function sectionIdToPageLabel(sectionId: string): string {
     skills: "Skills",
     experience: "Experience",
     projects: "Projects",
-    focus: "Current Focus",
+    focus: "Engineering Focus",
     certifications: "Certifications",
     contact: "Contact",
   };

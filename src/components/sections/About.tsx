@@ -2,47 +2,66 @@
 
 import { aboutData } from "@/src/data/about";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
+import { AboutCapabilityItem } from "@/src/components/about/AboutCapabilityItem";
+import { AboutHighlightCard } from "@/src/components/about/AboutHighlightCard";
 import { useInView, fadeInUpStyle } from "@/src/hooks/useInView";
 
 export function About() {
-  const { ref, inView } = useInView({ threshold: 0.2 });
+  const { ref, inView } = useInView({ threshold: 0.15 });
 
   return (
     <section id="about" ref={ref} className="scroll-mt-24 py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <SectionTitle
-          title="About"
-          subtitle="Full-stack engineer building enterprise applications and data platforms."
-        />
-        <div
-          className="group relative overflow-hidden rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-8 shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:bg-zinc-800/60 hover:shadow-xl hover:shadow-blue-500/10 md:p-10"
-          style={fadeInUpStyle(inView)}
-        >
-          <span
-            className="absolute top-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-300 group-hover:w-full"
-            aria-hidden
-          />
-          <div className="max-w-3xl space-y-5 text-base leading-[1.7] text-zinc-300 md:text-lg md:leading-[1.75]">
-            {aboutData.summary.split(/\n\n+/).map((paragraph, i) => (
-              <p key={i} className="antialiased">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-          {aboutData.highlights && aboutData.highlights.length > 0 && (
+        <SectionTitle title="About" subtitle={aboutData.subtitle} />
+
+        <div className="space-y-12 md:space-y-14">
+          <p
+            className="max-w-3xl text-base leading-relaxed text-zinc-300 sm:text-lg sm:leading-8"
+            style={fadeInUpStyle(inView)}
+          >
+            {aboutData.summary}
+          </p>
+
+          <div style={fadeInUpStyle(inView, 80)}>
+            <h3 className="text-lg font-semibold tracking-tight text-white sm:text-xl">
+              What I Do
+            </h3>
             <ul
-              className="mt-6 flex flex-wrap gap-2 border-t border-zinc-700/50 pt-6"
-              aria-label="Key highlights"
+              className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4"
+              aria-label="What I do"
             >
-              {aboutData.highlights.map((item) => (
-                <li key={item}>
-                  <span className="rounded-md bg-zinc-700/80 px-3 py-1.5 text-sm font-medium text-zinc-300 ring-1 ring-zinc-600/50 transition-colors group-hover:bg-zinc-600/80 group-hover:ring-blue-500/30">
-                    {item}
-                  </span>
-                </li>
+              {aboutData.capabilities.map((capability) => (
+                <AboutCapabilityItem
+                  key={capability.title}
+                  capability={capability}
+                />
               ))}
             </ul>
-          )}
+          </div>
+
+          <div style={fadeInUpStyle(inView, 160)}>
+            <h3 className="text-lg font-semibold tracking-tight text-white sm:text-xl">
+              Core Highlights
+            </h3>
+            <ul
+              className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4"
+              aria-label="Core highlights"
+            >
+              {aboutData.highlights.map((highlight) => (
+                <AboutHighlightCard
+                  key={highlight.label}
+                  highlight={highlight}
+                />
+              ))}
+            </ul>
+          </div>
+
+          <p
+            className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-zinc-500 sm:text-base sm:leading-7"
+            style={fadeInUpStyle(inView, 240)}
+          >
+            {aboutData.closing}
+          </p>
         </div>
       </div>
     </section>

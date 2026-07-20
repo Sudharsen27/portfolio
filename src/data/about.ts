@@ -1,12 +1,30 @@
 import type { AboutData } from "@/src/types";
 
 export const aboutData: AboutData = {
+  subtitle:
+    "Full-Stack Engineer building enterprise applications and scalable data platforms.",
   summary:
-    "Software Engineer with 2.5+ years of experience delivering full-stack solutions for enterprise applications and data management platforms. I specialize in building end-to-end products — designing RESTful APIs with FastAPI, modeling relational data in PostgreSQL, integrating Snowflake for analytics workloads, and shipping polished React and Next.js interfaces.\n\nAt Analytix-Hub and Wraptron Apptech, I've contributed to production systems spanning data governance, e-commerce, healthcare booking, and analytics dashboards. I work closely with product and engineering teams to translate business requirements into reliable, maintainable software — with a focus on performance, clean architecture, and on-time delivery.",
+    "I'm a Full Stack Software Engineer with 2.5+ years of experience building enterprise web applications, REST APIs, and scalable data platforms. I specialize in React, Next.js, FastAPI, Node.js, PostgreSQL, Snowflake, and AWS, delivering secure, high-performance, and maintainable software solutions.",
+  closing:
+    "I enjoy building scalable software that solves real business problems through clean architecture, performance optimization, and modern engineering practices.",
+  capabilities: [
+    { title: "Build Enterprise Web Applications", icon: "Laptop" },
+    { title: "Develop REST APIs with FastAPI & Node.js", icon: "Server" },
+    { title: "Design Scalable Backend Systems", icon: "Layers3" },
+    { title: "Build Responsive React & Next.js Interfaces", icon: "Code2" },
+    { title: "Design PostgreSQL Databases", icon: "Database" },
+    { title: "Integrate Snowflake Analytics", icon: "Workflow" },
+    { title: "Deploy Cloud-Ready Applications on AWS", icon: "Cloud" },
+    { title: "Write Clean, Maintainable Code", icon: "ShieldCheck" },
+  ],
   highlights: [
-    "2.5+ years full-stack experience",
-    "Enterprise & data platforms",
-    "React · FastAPI · PostgreSQL · Snowflake",
-    "AWS · Docker · CI/CD",
+    { label: "2.5+ Years Experience", icon: "Briefcase" },
+    { label: "15+ Projects Built", icon: "FolderKanban" },
+    { label: "Enterprise Applications", icon: "Building2" },
+    { label: "React & Next.js", icon: "Code2" },
+    { label: "FastAPI & Node.js", icon: "Server" },
+    { label: "PostgreSQL & Snowflake", icon: "Database" },
+    { label: "AWS Cloud", icon: "Cloud" },
+    { label: "REST API Development", icon: "Workflow" },
   ],
 };

@@ -270,30 +270,6 @@ export const otherProjects: Project[] = [
     repo: "https://github.com/Sudharsen27",
   },
   {
-    id: "5",
-    slug: "web-applications",
-    title: "Web Applications",
-    description:
-      "Multi-feature web application with reusable components and form processing.",
-    problem:
-      "A business needed a flexible web app with contact forms, email sync, and modular UI components.",
-    technologies: ["Next.js", "Tailwind CSS", "Web3Forms"],
-    keyFeatures: [
-      "Reusable component library",
-      "Web3Forms integration",
-      "Email synchronization",
-      "Responsive multi-page layout",
-    ],
-    challenges: [
-      "Integrating third-party form services while maintaining consistent UX",
-    ],
-    businessImpact:
-      "Provided a maintainable web application foundation that could be extended with new features quickly.",
-    tags: ["Next.js", "Tailwind CSS", "Web3Forms"],
-    href: "https://webapplicationss.netlify.app/",
-    repo: "https://github.com/Sudharsen27",
-  },
-  {
     id: "1",
     slug: "school-of-sustainability",
     title: "School of Sustainability",

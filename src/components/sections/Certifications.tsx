@@ -1,81 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { certificationsData } from "@/src/data/certifications";
+import { CertificationCard } from "@/src/components/certifications/CertificationCard";
+import { CertificationStats } from "@/src/components/certifications/CertificationStats";
+import {
+  certificationStats,
+  certificationsData,
+  certificationsSubtitle,
+} from "@/src/data/certifications";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
-import { Button } from "@/src/components/ui/Button";
-
-function hasLink(link: string | null | undefined): link is string {
-  return Boolean(link && link.trim().length > 0);
-}
+import { useInView, fadeInUpStyle } from "@/src/hooks/useInView";
 
 export function Certifications() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, inView } = useInView({ threshold: 0.15 });
 
   return (
-    <section id="certifications" ref={sectionRef} className="scroll-mt-24 py-20">
+    <section id="certifications" ref={ref} className="scroll-mt-24 py-20">
       <div className="mx-auto max-w-6xl px-4">
         <SectionTitle
           title="Certifications"
-          subtitle="Verified credentials showcasing continuous learning and practical engineering skills."
+          subtitle={certificationsSubtitle}
         />
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div style={fadeInUpStyle(inView)}>
+          <CertificationStats stats={certificationStats} />
+        </div>
+
+        <div className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {certificationsData.map((cert, index) => (
-            <article
+            <CertificationCard
               key={cert.id}
-              className="group relative flex h-full flex-col items-center rounded-xl border border-zinc-700/50 bg-zinc-800/40 p-6 text-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/50 hover:bg-zinc-800/60 hover:shadow-xl hover:shadow-blue-500/10"
-              style={
-                inView
-                  ? {
-                      opacity: 0,
-                      animation: "fade-in-up 0.55s ease-out forwards",
-                      animationDelay: `${index * 90}ms`,
-                    }
-                  : { opacity: 0 }
-              }
-            >
-              <span
-                className="absolute top-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-300 group-hover:w-full"
-                aria-hidden
-              />
-
-              <div className="flex w-full flex-1 flex-col items-center">
-                <h3 className="text-lg font-semibold leading-snug text-white">{cert.title}</h3>
-                <p className="mt-2 text-sm font-medium text-blue-400">{cert.issuer}</p>
-                <p className="mt-1 text-sm text-zinc-400">{cert.year}</p>
-
-                <div className="mt-auto w-full border-t border-zinc-700/50 pt-4">
-                  {hasLink(cert.link) ? (
-                    <Button variant="primary" href={cert.link}>
-                      View Certificate
-                    </Button>
-                  ) : (
-                    <div className="rounded-lg border border-zinc-700/70 bg-zinc-900/40 px-4 py-3">
-                      <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-amber-300">
-                        <span className="h-2 w-2 rounded-full bg-amber-300" aria-hidden />
-                        On Request
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-zinc-300">Certificate Available on Request</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </article>
+              certification={cert}
+              style={fadeInUpStyle(inView, 80 + index * 90)}
+            />
           ))}
         </div>
       </div>
