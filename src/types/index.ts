@@ -30,10 +30,12 @@ export interface Project {
   challenges: string[];
   businessImpact: string;
   tags: string[];
+  badges?: string[];
   href?: string;
   repo?: string;
   caseStudyHref?: string;
   featured?: boolean;
+  liveStatusLabel?: string;
 }
 
 export interface CertificationItem {
@@ -112,6 +114,17 @@ export interface CaseStudyTechCategory {
   items: string[];
 }
 
+export interface CaseStudyDeploymentInfo {
+  label: string;
+  items: string[];
+}
+
+export interface CaseStudyStatusItem {
+  label: string;
+  value: string;
+  highlight?: boolean;
+}
+
 export interface CaseStudyData {
   slug: string;
   title: string;
@@ -119,10 +132,12 @@ export interface CaseStudyData {
   liveUrl?: string;
   repoUrl?: string;
   overview: string;
+  overviewExtended?: string;
   problemStatement: string;
   problemStatementExtended?: string;
   solutionArchitecture: string;
   architectureDiagram?: string;
+  architectureNote?: string;
   architectureSectionTitle?: string;
   problemSectionTitle?: string;
   challengesSectionTitle?: string;
@@ -136,4 +151,12 @@ export interface CaseStudyData {
   lessonsLearned: string[];
   hideLiveDemo?: boolean;
   repoButtonLabel?: string;
+  deploymentBadges?: string[];
+  productionUrl?: string;
+  productionDeployment?: CaseStudyDeploymentInfo[];
+  hostingStatus?: { label: string; value: string; isLive?: boolean };
+  projectStatus?: CaseStudyStatusItem[];
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string[];
 }

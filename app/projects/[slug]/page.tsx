@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/src/components/layout/Navbar";
 import { CaseStudyLayout } from "@/src/components/case-study/CaseStudyLayout";
+import { RestaurantErpCaseStudy } from "@/src/components/case-study/restaurant-erp/RestaurantErpCaseStudy";
 import {
   caseStudySlugs,
   getCaseStudy,
@@ -26,8 +27,9 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${study.title} Case Study | Sundar Lingam`,
-    description: study.subtitle,
+    title: study.seoTitle ?? `${study.title} Case Study | Sundar Lingam`,
+    description: study.seoDescription ?? study.subtitle,
+    keywords: study.seoKeywords,
   };
 }
 
@@ -43,7 +45,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     <>
       <Navbar />
       <main>
-        <CaseStudyLayout data={study} />
+        {slug === "restaurant-erp" ? (
+          <RestaurantErpCaseStudy />
+        ) : (
+          <CaseStudyLayout data={study} />
+        )}
       </main>
     </>
   );

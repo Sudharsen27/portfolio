@@ -42,6 +42,10 @@ export function ProjectCard({
   const showLive = isRealUrl(project.href);
   const showRepo = isRealUrl(project.repo);
   const showCaseStudy = isRealUrl(project.caseStudyHref);
+  const cardBadges = project.badges?.length
+    ? project.badges
+    : project.technologies;
+  const statusLabel = project.liveStatusLabel ?? "Live";
 
   return (
     <article
@@ -61,50 +65,57 @@ export function ProjectCard({
         aria-hidden
       />
       <div className="flex flex-1 flex-col">
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="text-lg font-semibold text-white">{project.title}</h3>
-        {showLive && (
-          <span className="shrink-0 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-medium text-emerald-400 ring-1 ring-emerald-500/30">
-            Live
-          </span>
-        )}
-      </div>
-      <p className="mt-2 text-sm leading-relaxed text-zinc-300">
-        {project.description}
-      </p>
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+          {showLive && (
+            <span className="shrink-0 rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-medium text-emerald-400 ring-1 ring-emerald-500/30">
+              {statusLabel}
+            </span>
+          )}
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+          {project.description}
+        </p>
 
-      <div className="mt-4 flex-1 space-y-3">
-        <DetailBlock label="Problem Solved">{project.problem}</DetailBlock>
-        <DetailBlock label="Technologies">
-          <div className="flex flex-wrap gap-1.5">
-            {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-md bg-zinc-700/80 px-2 py-0.5 text-xs font-medium text-zinc-300"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </DetailBlock>
-        <DetailBlock label="Key Features">
-          <ul className="list-inside list-disc space-y-0.5">
-            {project.keyFeatures.map((feature) => (
-              <li key={feature}>{feature}</li>
-            ))}
-          </ul>
-        </DetailBlock>
-        <DetailBlock label="Engineering Challenges">
-          <ul className="list-inside list-disc space-y-0.5">
-            {project.challenges.map((challenge) => (
-              <li key={challenge}>{challenge}</li>
-            ))}
-          </ul>
-        </DetailBlock>
-        <DetailBlock label="Business Impact">
-          {project.businessImpact}
-        </DetailBlock>
-      </div>
+        <div className="mt-4 flex-1 space-y-3">
+          <DetailBlock label="Problem Solved">{project.problem}</DetailBlock>
+          <DetailBlock label="Technologies">
+            <div className="flex flex-wrap gap-1.5">
+              {cardBadges.map((tech) => (
+                <span
+                  key={tech}
+                  className={`rounded-md px-2 py-0.5 text-xs font-medium ${
+                    tech === "Production Live" ||
+                    tech === "Production Ready" ||
+                    tech === "Enterprise" ||
+                    tech === "Cloud Native"
+                      ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/30"
+                      : "bg-zinc-700/80 text-zinc-300"
+                  }`}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </DetailBlock>
+          <DetailBlock label="Key Features">
+            <ul className="list-inside list-disc space-y-0.5">
+              {project.keyFeatures.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+          </DetailBlock>
+          <DetailBlock label="Engineering Challenges">
+            <ul className="list-inside list-disc space-y-0.5">
+              {project.challenges.map((challenge) => (
+                <li key={challenge}>{challenge}</li>
+              ))}
+            </ul>
+          </DetailBlock>
+          <DetailBlock label="Business Impact">
+            {project.businessImpact}
+          </DetailBlock>
+        </div>
       </div>
 
       <div className="mt-6 flex shrink-0 flex-wrap items-center gap-3 border-t border-zinc-700/50 pt-4">
@@ -113,14 +124,14 @@ export function ProjectCard({
             Live Demo
           </Button>
         )}
-        {showRepo && (
-          <Button variant="secondary" href={project.repo!} external>
-            GitHub
-          </Button>
-        )}
         {showCaseStudy && (
           <Button variant="secondary" href={project.caseStudyHref!}>
             Case Study
+          </Button>
+        )}
+        {showRepo && (
+          <Button variant="secondary" href={project.repo!} external>
+            GitHub
           </Button>
         )}
       </div>
