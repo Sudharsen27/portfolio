@@ -13,7 +13,7 @@ export function SkillBadge({ name, featured = false }: SkillBadgeProps) {
   }
 
   return (
-    <span className="inline-flex items-center rounded-md border border-zinc-700/60 bg-zinc-700/50 px-2.5 py-1.5 text-sm font-medium text-zinc-200 transition-all duration-200 hover:border-zinc-600 hover:bg-zinc-600/60 hover:text-white">
+    <span className="inline-flex items-center rounded-md border border-zinc-700/60 bg-zinc-700/50 px-2.5 py-1.5 text-sm font-medium text-zinc-200 transition-all duration-300 hover:scale-105 hover:border-blue-500 hover:bg-blue-500/10 hover:text-white">
       {name}
     </span>
   );
