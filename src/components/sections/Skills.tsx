@@ -23,13 +23,17 @@ export function Skills() {
             <FeaturedTechnologies technologies={featuredTechnologies} />
           </div>
 
-          <div className="grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="flex flex-wrap items-start gap-6">
             {skillsData.map((category, index) => (
-              <SkillCategoryCard
+              <div
                 key={category.title}
-                category={category}
-                style={fadeInUpStyle(inView, 80 + index * 90)}
-              />
+                className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(20%-1.2rem)]"
+              >
+                <SkillCategoryCard
+                  category={category}
+                  style={fadeInUpStyle(inView, 80 + index * 90)}
+                />
+              </div>
             ))}
           </div>
         </div>
