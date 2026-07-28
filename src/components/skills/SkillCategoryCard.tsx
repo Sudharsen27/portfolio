@@ -22,13 +22,15 @@ export function SkillCategoryCard({ category, style }: SkillCategoryCardProps) {
         <SkillIcon name={category.icon} className="h-4 w-4 shrink-0" />
         {category.title}
       </h3>
-      <ul className="mt-5 flex flex-wrap gap-2" aria-label={category.title}>
-        {category.items.map((item) => (
-          <li key={item}>
-            <SkillBadge name={item} />
-          </li>
-        ))}
-      </ul>
+      <div className="mt-5">
+        <ul className="flex flex-wrap gap-2" aria-label={category.title}>
+          {category.items.map((item) => (
+            <li key={item}>
+              <SkillBadge name={item} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
