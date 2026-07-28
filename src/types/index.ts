@@ -58,6 +58,7 @@ export interface HeroData {
   headline: string;
   subhead: string;
   tagline: string;
+  highlightBadges?: string[];
   techCategories: HeroTechCategory[];
   description: string;
 }
@@ -100,19 +101,39 @@ export interface CaseStudySection {
   content: string | string[];
 }
 
+export interface CaseStudyKeyFeature {
+  title: string;
+  description?: string;
+  items?: string[];
+}
+
+export interface CaseStudyTechCategory {
+  label: string;
+  items: string[];
+}
+
 export interface CaseStudyData {
   slug: string;
   title: string;
   subtitle: string;
-  liveUrl: string;
+  liveUrl?: string;
   repoUrl?: string;
   overview: string;
   problemStatement: string;
+  problemStatementExtended?: string;
   solutionArchitecture: string;
   architectureDiagram?: string;
+  architectureSectionTitle?: string;
+  problemSectionTitle?: string;
+  challengesSectionTitle?: string;
+  lessonsSectionTitle?: string;
+  hideSolutionArchitectureText?: boolean;
   techStack: string[];
-  keyFeatures: { title: string; description: string }[];
+  techStackCategories?: CaseStudyTechCategory[];
+  keyFeatures: CaseStudyKeyFeature[];
   sections: CaseStudySection[];
   challenges: string[];
   lessonsLearned: string[];
+  hideLiveDemo?: boolean;
+  repoButtonLabel?: string;
 }

@@ -2,8 +2,17 @@ import type { HeroData } from "@/src/types";
 
 export const heroData: HeroData = {
   headline: "Sundar Lingam",
-  subhead: "Full Stack Software Engineer",
-  tagline: "Building Enterprise-Grade Full-Stack Applications",
+  subhead: "Software Engineer | Full-Stack Developer | Cloud & DevOps",
+  tagline: "",
+  highlightBadges: [
+    "React",
+    "Next.js",
+    "FastAPI",
+    "Node.js",
+    "PostgreSQL",
+    "Docker",
+    "AWS",
+  ],
   techCategories: [
     {
       label: "Frontend",
@@ -23,5 +32,5 @@ export const heroData: HeroData = {
     },
   ],
   description:
-    "Building scalable full-stack applications with React, Next.js, FastAPI, Node.js, PostgreSQL, Snowflake, and AWS. Passionate about creating secure, high-performance software for modern business solutions.",
+    "I build modern, scalable web applications and cloud-native solutions using React, Next.js, Node.js, FastAPI, PostgreSQL, Docker, and AWS. Passionate about building high-performance, enterprise-grade software with clean architecture and great user experiences.",
 };

@@ -3,14 +3,14 @@ import { mdqmCaseStudy } from "./mdqm-case-study";
 import { nexoraCrmCaseStudy } from "./nexora-crm-case-study";
 import { shopSphereCaseStudy } from "./shop-sphere-case-study";
 import { medilinkCaseStudy } from "./medilink-case-study";
-import { studentDashboardCaseStudy } from "./student-dashboard-case-study";
+import { restaurantErpCaseStudy } from "./restaurant-erp-case-study";
 
 export const caseStudies: Record<string, CaseStudyData> = {
+  "restaurant-erp": restaurantErpCaseStudy,
   mdqm: mdqmCaseStudy,
   "nexora-crm": nexoraCrmCaseStudy,
   "shop-sphere": shopSphereCaseStudy,
   medilink: medilinkCaseStudy,
-  "student-dashboard": studentDashboardCaseStudy,
 };
 
 export const caseStudySlugs = Object.keys(caseStudies);

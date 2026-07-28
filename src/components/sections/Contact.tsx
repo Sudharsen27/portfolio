@@ -1,7 +1,6 @@
 "use client";
 
 import { ContactInfoCard } from "@/src/components/contact/ContactInfoCard";
-import { Button } from "@/src/components/ui/Button";
 import { SectionTitle } from "@/src/components/ui/SectionTitle";
 import { contactData } from "@/src/data/contact";
 import { useInView, fadeInUpStyle } from "@/src/hooks/useInView";
@@ -101,24 +100,6 @@ export function Contact() {
             {infoCards.map((item) => (
               <ContactInfoCard key={item.label} {...item} />
             ))}
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <Button
-              variant="primary"
-              href={contactData.resumeUrl ?? "/resume.pdf"}
-              external
-              onClick={() => trackVisitorEvent("resume_downloaded")}
-            >
-              Download Resume
-            </Button>
-            <Button
-              variant="secondary"
-              href={`mailto:${contactData.email}`}
-              onClick={() => trackVisitorEvent("email_clicked")}
-            >
-              Send Email
-            </Button>
           </div>
         </div>
       </div>

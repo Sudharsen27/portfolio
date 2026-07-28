@@ -32,7 +32,19 @@ export const skillsData: SkillCategory[] = [
   {
     title: "Cloud & DevOps",
     icon: "Cloud",
-    items: ["AWS", "Docker", "GitHub Actions"],
+    items: [
+      "Docker",
+      "Amazon ECS (Fargate)",
+      "Amazon ECR",
+      "Amazon RDS (PostgreSQL)",
+      "Amazon ElastiCache (Redis)",
+      "Amazon VPC",
+      "AWS IAM",
+      "AWS Secrets Manager",
+      "AWS CloudFormation",
+      "AWS CDK",
+      "AWS CLI",
+    ],
   },
   {
     title: "Tools",

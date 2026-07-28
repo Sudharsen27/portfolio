@@ -2,6 +2,45 @@ import type { Project } from "@/src/types";
 
 export const featuredProjects: Project[] = [
   {
+    id: "11",
+    slug: "restaurant-erp",
+    title: "Restaurant ERP",
+    description:
+      "Full-stack Restaurant ERP to streamline authentication, inventory, orders, billing, and reporting—with Docker and AWS cloud deployment.",
+    problem:
+      "Restaurants often rely on multiple disconnected systems for inventory, orders, and billing, resulting in inefficient workflows and inconsistent reporting.",
+    technologies: [
+      "React.js",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "Amazon ECS",
+      "Amazon ECR",
+      "Amazon RDS",
+      "AWS CDK",
+    ],
+    keyFeatures: [
+      "Secure authentication, inventory, orders, billing, and reporting",
+      "Dockerized application published to Amazon ECR",
+      "Deployed with Amazon ECS (Fargate)",
+      "Amazon RDS PostgreSQL and ElastiCache Redis",
+      "VPC networking, IAM, and AWS Secrets Manager",
+      "Infrastructure provisioned with AWS CDK and CloudFormation",
+    ],
+    challenges: [
+      "Designing a scalable containerized deployment architecture",
+      "Configuring secure IAM permissions between AWS services",
+      "Managing AWS resources efficiently to avoid unnecessary cloud costs",
+    ],
+    businessImpact:
+      "Successfully deployed on AWS for development and testing. Infrastructure was later decommissioned to avoid ongoing costs; source code and deployment configuration remain ready to redeploy.",
+    tags: ["FastAPI", "React", "AWS", "Docker", "ECS", "Cloud Deployment"],
+    repo: "https://github.com/Sudharsen27",
+    caseStudyHref: "/projects/restaurant-erp",
+    featured: true,
+  },
+  {
     id: "9",
     slug: "mdqm",
     title: "MDQM / MDM Data Governance Platform",
@@ -160,69 +199,9 @@ export const featuredProjects: Project[] = [
     caseStudyHref: "/projects/medilink",
     featured: true,
   },
-  {
-    id: "8",
-    slug: "student-dashboard",
-    title: "Student Dashboard",
-    description:
-      "Analytics dashboard for managing and visualizing student academic performance data.",
-    problem:
-      "Educational administrators needed an interactive tool to search, analyze, and manage student marks stored in a cloud data warehouse.",
-    technologies: [
-      "Next.js",
-      "Node.js",
-      "Snowflake",
-      "REST API",
-      "Data Visualization",
-    ],
-    keyFeatures: [
-      "Search, sort, and filter student records",
-      "CRUD operations for marks management",
-      "Snowflake-backed queries for analytics",
-      "Interactive data tables and summary views",
-      "Responsive dashboard layout",
-    ],
-    challenges: [
-      "Optimizing Snowflake query performance for real-time dashboard interactions",
-      "Building a Node.js API layer that abstracts warehouse complexity from the frontend",
-      "Handling pagination and large result sets without UI lag",
-    ],
-    businessImpact:
-      "Gave administrators a single dashboard to manage student performance data, replacing manual spreadsheet workflows with a live analytics interface.",
-    tags: ["Next.js", "Snowflake", "Node.js", "Dashboard"],
-    href: "https://student-dashboard-snowflake-fronten.vercel.app/",
-    repo: "https://github.com/Sudharsen27",
-    caseStudyHref: "/projects/student-dashboard",
-    featured: true,
-  },
 ];
 
 export const otherProjects: Project[] = [
-  {
-    id: "4",
-    slug: "job-board",
-    title: "Job Board Platform",
-    description:
-      "Full-stack job portal with role-based access and secure user registration.",
-    problem:
-      "Job seekers and employers needed a platform to post listings and manage applications with proper access controls.",
-    technologies: ["React", "Node.js", "Express", "MongoDB", "JWT"],
-    keyFeatures: [
-      "JWT authentication with RBAC",
-      "Job listing search and filters",
-      "Employer job posting workflow",
-      "RESTful API integration",
-    ],
-    challenges: [
-      "Implementing role-based permissions across employer and candidate flows",
-      "Designing scalable job listing queries with MongoDB indexing",
-    ],
-    businessImpact:
-      "Enabled structured job discovery and application management in a single deployable web application.",
-    tags: ["MERN", "JWT", "REST API", "RBAC"],
-    href: "https://jobboardapplication.pages.dev/",
-    repo: "https://github.com/Sudharsen27",
-  },
   {
     id: "2",
     slug: "energy-lab",
