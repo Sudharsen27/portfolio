@@ -23,7 +23,7 @@ export function Skills() {
             <FeaturedTechnologies technologies={featuredTechnologies} />
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {skillsData.map((category, index) => (
               <SkillCategoryCard
                 key={category.title}
